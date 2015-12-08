@@ -1,4 +1,6 @@
-# PocketHub [![Build Status](https://travis-ci.org/pockethub/PocketHub.svg?branch=master)](https://travis-ci.org/pockethub/PocketHub)
+# PocketHub-scala 
+
+This is the fork for Scala.
 
 This repository contains the source code for the PocketHub Android app.
 
