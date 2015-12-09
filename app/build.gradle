@@ -69,6 +69,8 @@ android {
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -129,6 +131,7 @@ dependencies {
     compile 'com.bugsnag:bugsnag-android:+'
 
     compile 'org.scala-lang:scala-library:2.11.7'
+    compile 'com.android.support:multidex:1.0.0'
     //Self compiled .aar version of wishlist
     compile (name:'lib', ext:'aar')
     testCompile 'junit:junit:4.12'
