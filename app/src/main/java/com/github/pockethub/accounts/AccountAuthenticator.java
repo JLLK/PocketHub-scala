@@ -24,8 +24,6 @@ import static android.accounts.AccountManager.KEY_INTENT;
 import static com.github.pockethub.accounts.AccountConstants.ACCOUNT_TYPE;
 import static com.github.pockethub.accounts.AccountConstants.APP_NOTE;
 import static com.github.pockethub.accounts.AccountConstants.APP_NOTE_URL;
-import static com.github.pockethub.accounts.LoginActivity.PARAM_AUTHTOKEN_TYPE;
-import static com.github.pockethub.accounts.LoginActivity.PARAM_USERNAME;
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
@@ -72,7 +70,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             final String[] requiredFeatures, final Bundle options)
             throws NetworkErrorException {
         final Intent intent = new Intent(context, LoginActivity.class);
-        intent.putExtra(PARAM_AUTHTOKEN_TYPE, authTokenType);
+        intent.putExtra(LoginActivity.PARAM_AUTHTOKEN_TYPE(), authTokenType);
         intent.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_INTENT, intent);
@@ -109,7 +107,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
     private Intent createLoginIntent(final AccountAuthenticatorResponse response) {
         final Intent intent = new Intent(context, LoginActivity.class);
-        intent.putExtra(PARAM_AUTHTOKEN_TYPE, ACCOUNT_TYPE);
+        intent.putExtra(LoginActivity.PARAM_AUTHTOKEN_TYPE(), ACCOUNT_TYPE);
         intent.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         return intent;
     }
@@ -209,10 +207,10 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             final AccountAuthenticatorResponse response, final Account account,
             final String authTokenType, final Bundle options) {
         final Intent intent = new Intent(context, LoginActivity.class);
-        intent.putExtra(PARAM_AUTHTOKEN_TYPE, authTokenType);
+        intent.putExtra(LoginActivity.PARAM_AUTHTOKEN_TYPE(), authTokenType);
         intent.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         if (!TextUtils.isEmpty(account.name))
-            intent.putExtra(PARAM_USERNAME, account.name);
+            intent.putExtra(LoginActivity.PARAM_USERNAME(), account.name);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_INTENT, intent);
         return bundle;

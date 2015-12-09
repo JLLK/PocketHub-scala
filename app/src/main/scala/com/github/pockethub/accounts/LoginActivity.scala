@@ -27,8 +27,6 @@ import com.squareup.okhttp.HttpUrl
 import retrofit.RetrofitError
 import retrofit.client.Response
 
-
-
 /**
   * @author chentaov5@gmail.com
   *
@@ -54,7 +52,6 @@ import retrofit.client.Response
   */
 object LoginActivity {
   private val TAG               = "LoginActivity"
-
   /**
     * Sync period in seconds, currently every 8 hours
     */
@@ -80,17 +77,16 @@ object LoginActivity {
 
 class LoginActivity extends RoboAccountAuthenticatorAppCompatActivity with BaseClient.OnResultCallback[User] {
   outer =>
-
   import LoginActivity._
 
-  private val WEBVIEW_REQUEST_CODE = 0
+  val WEBVIEW_REQUEST_CODE = 0
 
-  private var scope: String = null
-  private var accessToken: String = null
-  private var accountManager: AccountManager = null
-  private var accounts: Array[Account] = null
-  private var progressDialog: AlertDialog = null
-  private var requestTokenClient: RequestTokenClient = null
+  private var scope: String                           = null
+  private var accessToken: String                     = null
+  private var accountManager: AccountManager          = null
+  private var accounts: Array[Account]                = null
+  private var progressDialog: AlertDialog             = null
+  private var requestTokenClient: RequestTokenClient  = null
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
