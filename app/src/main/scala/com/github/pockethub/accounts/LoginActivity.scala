@@ -51,11 +51,11 @@ import retrofit.client.Response
   *
   */
 object LoginActivity {
-  private val TAG               = "LoginActivity"
+  private val TAG           = "LoginActivity"
   /**
     * Sync period in seconds, currently every 8 hours
     */
-  private val SYNC_PERIOD: Long = 8L * 60L * 60L
+  private val SYNC_PERIOD   = 8L * 60L * 60L
   /**
     * Auth token type parameter
     */
