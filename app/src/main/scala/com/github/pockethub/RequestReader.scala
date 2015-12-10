@@ -35,7 +35,7 @@ class RequestReader(private val handle: File, private val version: Int) {
     *
     * @return read data
     */
-  def read[V >: AnyRef](): V = {
+  def read[V >: Null](): V = {
     !handle.exists() || handle.length() == 0 match {
       case true => null
       case _ =>

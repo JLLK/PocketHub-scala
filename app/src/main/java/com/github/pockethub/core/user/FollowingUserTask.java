@@ -49,7 +49,7 @@ public class FollowingUserTask extends AuthenticatedUserTask<Boolean> {
     }
 
     @Override
-    protected Boolean run(final Account account) throws Exception {
+    public Boolean run(final Account account) throws Exception {
         return service.isFollowing(login);
     }
 

@@ -94,7 +94,7 @@ public class EditAssigneeTask extends ProgressDialogTask<Issue> {
     }
 
     @Override
-    protected Issue run(Account account) throws Exception {
+    public Issue run(Account account) throws Exception {
         EditIssueAssigneeRequestDTO edit = new EditIssueAssigneeRequestDTO();
         if (assignee != null)
             edit.assignee = assignee.login;

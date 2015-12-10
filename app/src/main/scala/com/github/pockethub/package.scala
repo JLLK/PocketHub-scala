@@ -3,7 +3,11 @@ package com.github
 import java.io.{IOException, Closeable}
 import java.nio.channels.FileLock
 
+import android.accounts.{AccountManager, Account}
+import android.content.Context
 import android.util.Log
+import com.github.pockethub.accounts.AccountScope
+import roboguice.inject.ContextScope
 
 /**
   * Created by chentao on 15/12/10.
@@ -59,6 +63,29 @@ package object pockethub {
             Log.d(TAG, "Exception unlocking file", e)
         }
       }
+    }
+  }
+
+  def inAccountScope[A](account: Account, manager: AccountManager)(fun: => A)(implicit accountScope: AccountScope): A = {
+    require(account != null)
+    require(manager != null)
+    require(accountScope != null)
+    accountScope.enterWith(account, manager)
+    try{
+      fun
+    } finally {
+      accountScope.exit()
+    }
+  }
+
+  def inContextScope[A](context: Context)(fun: => A)(implicit contextScope: ContextScope): A = {
+    require(context != null)
+    require(contextScope != null)
+    contextScope.enter(context)
+    try{
+      fun
+    } finally {
+      contextScope.exit(context)
     }
   }
 }

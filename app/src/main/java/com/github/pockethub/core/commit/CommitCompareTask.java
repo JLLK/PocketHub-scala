@@ -58,7 +58,7 @@ public class CommitCompareTask extends AuthenticatedUserTask<CompareCommit> {
     }
 
     @Override
-    protected CompareCommit run(Account account) throws Exception {
+    public CompareCommit run(Account account) throws Exception {
         return new CompareCommitsClient(context,
                 InfoUtils.createRepoInfo(repository), base, head).executeSync();
     }

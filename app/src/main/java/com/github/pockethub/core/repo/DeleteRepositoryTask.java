@@ -58,7 +58,7 @@ public class DeleteRepositoryTask extends ProgressDialogTask<Void> {
     }
 
     @Override
-    protected Void run(Account account) throws Exception {
+    public Void run(Account account) throws Exception {
         final String id = InfoUtils.createRepoId(repo);
         String[] paths = id.split("/");
         final String owner = paths[0];

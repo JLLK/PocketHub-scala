@@ -51,7 +51,7 @@ public class RefreshUserTask extends AuthenticatedUserTask<User> {
     }
 
     @Override
-    protected User run(Account account) throws Exception {
+    public User run(Account account) throws Exception {
         return new RequestUserClient(context, login).executeSync();
     }
 

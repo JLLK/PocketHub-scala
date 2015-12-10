@@ -51,7 +51,7 @@ public class StarredRepositoryTask extends AuthenticatedUserTask<Boolean> {
     }
 
     @Override
-    protected Boolean run(Account account) throws Exception {
+    public Boolean run(Account account) throws Exception {
         return new CheckRepoStarredClient(context, repo.owner.login, repo.name).executeSync().getStatus() == 204;
     }
 

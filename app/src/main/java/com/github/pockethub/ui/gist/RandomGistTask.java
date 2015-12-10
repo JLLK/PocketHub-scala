@@ -70,7 +70,7 @@ public class RandomGistTask extends ProgressDialogTask<Gist> {
     }
 
     @Override
-    protected Gist run(Account account) throws Exception {
+    public Gist run(Account account) throws Exception {
         PageIterator<Gist> pages = new PageIterator<>(new PageIterator.GitHubRequest<List<Gist>>() {
             @Override
             public GithubClient<List<Gist>> execute(int page) {

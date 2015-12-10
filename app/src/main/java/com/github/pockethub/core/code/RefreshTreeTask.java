@@ -66,7 +66,7 @@ public class RefreshTreeTask extends AuthenticatedUserTask<FullTree> {
     }
 
     @Override
-    protected FullTree run(Account account) throws Exception {
+    public FullTree run(Account account) throws Exception {
         GitReference ref = reference;
         String branch = RefUtils.getPath(ref);
         if (branch == null) {

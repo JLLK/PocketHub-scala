@@ -364,7 +364,7 @@ public class IssuesViewActivity extends PagerActivity {
         new AuthenticatedUserTask<Boolean>(this) {
 
             @Override
-            protected Boolean run(Account account) throws Exception {
+            public Boolean run(Account account) throws Exception {
                 List<Team> teams =  new GetOrgTeamsClient(context, repo.owner.login).executeSync();
                 List<User> users = new GetTeamMembersClient(context, String.valueOf(teams.get(0).id)).executeSync();
 

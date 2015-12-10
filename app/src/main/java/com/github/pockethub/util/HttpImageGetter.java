@@ -225,7 +225,7 @@ public class HttpImageGetter implements ImageGetter {
         new AuthenticatedUserTask<CharSequence>(context) {
 
             @Override
-            protected CharSequence run(Account account) throws Exception {
+            public CharSequence run(Account account) throws Exception {
                 return HtmlUtils.encode(html, HttpImageGetter.this);
             }
 

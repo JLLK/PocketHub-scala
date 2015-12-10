@@ -65,7 +65,7 @@ public class RefreshCommitTask extends AuthenticatedUserTask<FullCommit> {
     }
 
     @Override
-    protected FullCommit run(Account account) throws Exception {
+    public FullCommit run(Account account) throws Exception {
         Commit commit = store.refreshCommit(repository, id);
         GitCommit rawCommit = commit.commit;
         if (rawCommit != null && rawCommit.comment_count > 0) {

@@ -62,7 +62,7 @@ public class FollowUserTask extends ProgressDialogTask<User> {
     }
 
     @Override
-    protected User run(final Account account) throws Exception {
+    public User run(final Account account) throws Exception {
         service.follow(login);
 
         return null;

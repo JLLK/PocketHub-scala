@@ -38,7 +38,7 @@ class RequestWriter(private val handle: File, private val version: Int) {
     }
   }
 
-  def write[V >: AnyRef](request: V): V = {
+  def write[V >: Null](request: V): V = {
     createDirectory(handle.getParentFile)
     val dir = new RandomAccessFile(handle, "rw")
     val lock = dir.getChannel.lock()

@@ -211,7 +211,16 @@ class LoginActivity extends RoboAccountAuthenticatorAppCompatActivity with BaseC
 
   private def openLoginInBrowser(client: GithubDeveloperCredentialsProvider) {
     val initialScope = "user,public_repo,repo,delete_repo,notifications,gist"
-    val url = new HttpUrl.Builder().scheme("https").host(OAUTH_HOST).addPathSegment("login").addPathSegment("oauth").addPathSegment("authorize").addQueryParameter("client_id", client.getApiClient).addQueryParameter("scope", initialScope)
+    val url = new HttpUrl
+      .Builder()
+      .scheme("https")
+      .host(OAUTH_HOST)
+      .addPathSegment("login")
+      .addPathSegment("oauth")
+      .addPathSegment("authorize")
+      .addQueryParameter("client_id", client.getApiClient)
+      .addQueryParameter("scope", initialScope)
+
     val intent = new Intent(this, classOf[LoginWebViewActivity])
     intent.putExtra(INTENT_EXTRA_URL, url.toString)
     startActivityForResult(intent, WEBVIEW_REQUEST_CODE)
@@ -220,7 +229,7 @@ class LoginActivity extends RoboAccountAuthenticatorAppCompatActivity with BaseC
   class AccountLoader(context: Context) extends AuthenticatedUserTask[util.List[Organization]](context) {
     @Inject private var cache: AccountDataManager = null
 
-    protected override def run(account: Account): util.List[Organization] = {
+    override def run(account: Account): util.List[Organization] = {
       cache.getOrgs(true)
     }
   }

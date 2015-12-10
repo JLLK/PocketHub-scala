@@ -240,7 +240,7 @@ public class CommitDiffListFragment extends DialogFragment implements
                 commentImageGetter) {
 
             @Override
-            protected FullCommit run(Account account) throws Exception {
+            public FullCommit run(Account account) throws Exception {
                 FullCommit full = super.run(account);
 
                 List<CommitFile> files = full.getCommit().files;

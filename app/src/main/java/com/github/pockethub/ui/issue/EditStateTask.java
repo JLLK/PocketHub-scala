@@ -81,7 +81,7 @@ public class EditStateTask extends ProgressDialogTask<Issue> {
     }
 
     @Override
-    protected Issue run(Account account) throws Exception {
+    public Issue run(Account account) throws Exception {
         IssueState state;
         if (close)
             state = IssueState.closed;

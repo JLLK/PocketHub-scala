@@ -68,7 +68,7 @@ public class EditMilestoneTask extends ProgressDialogTask<Issue> {
     }
 
     @Override
-    protected Issue run(Account account) throws Exception {
+    public Issue run(Account account) throws Exception {
         EditIssueMilestoneRequestDTO editedIssue = new EditIssueMilestoneRequestDTO();
         editedIssue.milestone = milestoneNumber;
         return store.editIssue(repositoryId, issueNumber, editedIssue);

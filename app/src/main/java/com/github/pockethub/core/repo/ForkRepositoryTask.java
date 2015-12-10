@@ -49,7 +49,7 @@ public class ForkRepositoryTask extends ProgressDialogTask<Repo> {
     }
 
     @Override
-    protected Repo run(Account account) throws Exception {
+    public Repo run(Account account) throws Exception {
         return new Repo();
     }
 
