@@ -1,7 +1,7 @@
-package com.github
+package com.github.pockethub
 
-import java.io.{IOException, Closeable}
-import java.nio.channels.FileLock
+import java.io._
+import java.util.zip.GZIPOutputStream
 
 import android.util.Log
 
@@ -29,36 +29,40 @@ import android.util.Log
   *
   *                              HERE BE DRAGONS
   */
-package object pockethub {
-  private val TAG = "pockethub"
+class RequestWriter(private val handle: File, private val version: Int) {
+  private val TAG = "RequestWriter"
 
-  def inSafe(in: Closeable)(fun: => Unit): Unit = {
-    try
-      fun
-    finally {
-      if (in != null) {
-        try
-          in.close()
-        catch {
-          case e: IOException =>
-            Log.d(TAG, "Exception closing stream", e)
-        }
-      }
+  def createDirectory(dir: File): Unit = {
+    if (dir != null && !dir.exists()) {
+      dir.mkdirs()
     }
   }
 
-  def inSafe(in: FileLock)(fun: => Unit): Unit = {
-    try
-      fun
-    finally {
-      if (in != null) {
-        try
-          in.release()
-        catch {
-          case e: IOException =>
-            Log.d(TAG, "Exception unlocking file", e)
+  def write[V >: AnyRef](request: V): V = {
+    createDirectory(handle.getParentFile)
+    val dir = new RandomAccessFile(handle, "rw")
+    val lock = dir.getChannel.lock()
+    val result: Either[V, IOException] = try {
+      inSafe(dir) {
+        inSafe(lock) {
+          val output = new ObjectOutputStream(
+            new GZIPOutputStream(new FileOutputStream(dir.getFD), 8192)
+          )
+          inSafe(output) {
+            output.writeInt(version)
+            output.writeObject(request)
+          }
         }
       }
+      Left(request)
+    } catch {
+      case e: IOException =>
+        Log.d(TAG, "Exception writing cache " + handle.getName, e)
+        Right(e)
+    }
+    result match {
+      case Left(r) => r
+      case Right(e) => null
     }
   }
 }
