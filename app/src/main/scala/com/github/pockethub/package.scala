@@ -37,9 +37,9 @@ package object pockethub {
   private val TAG = "pockethub"
 
   def inSafe[A](in: Closeable)(fun: => A): A = {
-    try
+    try {
       fun
-    finally {
+    } finally {
       if (in != null) {
         try
           in.close()
@@ -52,9 +52,9 @@ package object pockethub {
   }
 
   def inSafe[A](in: FileLock)(fun: => A): A = {
-    try
+    try {
       fun
-    finally {
+    } finally {
       if (in != null) {
         try
           in.release()

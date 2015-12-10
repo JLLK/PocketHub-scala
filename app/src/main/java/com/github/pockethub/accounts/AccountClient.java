@@ -48,7 +48,7 @@ public class AccountClient extends DefaultClient {
     }
 
     @Override
-    protected HttpURLConnection configureRequest(final HttpURLConnection request) {
+    public HttpURLConnection configureRequest(final HttpURLConnection request) {
         GitHubAccount account = accountProvider.get();
 
         if (Log.isLoggable(TAG, DEBUG))

@@ -1,12 +1,11 @@
 package com.github.pockethub
 
-import android.content.Context
-import android.support.multidex.{MultiDex, MultiDexApplication}
-import com.alorma.github.basesdk.client.credentials.{GithubDeveloperCredentials, MetaDeveloperCredentialsProvider}
-import com.bugsnag.android.Bugsnag
+import java.net.HttpURLConnection
+
+import org.eclipse.egit.github.core.client.GitHubClient
 
 /**
-  * Created by chentao on 15/12/9.
+  * Created by chentao on 15/12/10.
   *
   * @author chentaov5@gmail.com
   *
@@ -28,18 +27,17 @@ import com.bugsnag.android.Bugsnag
   *                             (vvv(VVV)(VVV)vvv)
   *
   *                              HERE BE DRAGONS
-  *
   */
-class PocketHub extends MultiDexApplication {
-  override def onCreate() {
-    super.onCreate()
-    GithubDeveloperCredentials.init(new MetaDeveloperCredentialsProvider(getApplicationContext))
-    Bugsnag.init(this)
-    Bugsnag.setNotifyReleaseStages("production")
-  }
+class DefaultClient() extends GitHubClient() {
+  private val USER_AGENT = "GitHubAndroid/1.6"
 
-  override protected def attachBaseContext(base: Context) = {
-    super.attachBaseContext(base)
-    MultiDex.install(this)
+  setSerializeNulls(false)
+  setUserAgent(USER_AGENT)
+
+  override def configureRequest(request: HttpURLConnection): HttpURLConnection = {
+    super.configureRequest(request)
+
+    request.setRequestProperty(GitHubClient.HEADER_ACCEPT, "application/vnd.github.beta.full+json")
+    request
   }
 }
