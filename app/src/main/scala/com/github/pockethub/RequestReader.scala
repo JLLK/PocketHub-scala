@@ -1,9 +1,7 @@
-package com.github
+package com.github.pockethub
 
-import java.io.{IOException, Closeable}
-import java.nio.channels.FileLock
-
-import android.util.Log
+import java.io.{FileInputStream, ObjectInputStream, RandomAccessFile, File}
+import java.util.zip.GZIPInputStream
 
 /**
   * Created by chentao on 15/12/10.
@@ -29,36 +27,36 @@ import android.util.Log
   *
   *                              HERE BE DRAGONS
   */
-package object pockethub {
-  private val TAG = "pockethub"
+class RequestReader(private val handle: File, private val version: Int) {
+  private val TAG = "RequestReader"
 
-  def inSafe[A](in: Closeable)(fun: => A): A = {
-    try
-      fun
-    finally {
-      if (in != null) {
-        try
-          in.close()
-        catch {
-          case e: IOException =>
-            Log.d(TAG, "Exception closing stream", e)
+  /**
+    * Read request data
+    *
+    * @return read data
+    */
+  def read[V >: AnyRef](): V = {
+    !handle.exists() || handle.length() == 0 match {
+      case true => null
+      case _ =>
+        val dir = new RandomAccessFile(handle, "rw")
+        inSafe(dir) {
+          val lock = dir.getChannel.lock()
+          inSafe(lock) {
+            val input = new ObjectInputStream(
+              new GZIPInputStream(new FileInputStream(dir.getFD), 8192 * 8)
+            )
+            inSafe(input) {
+              input.readInt() != version match {
+                case true =>
+                  dir.setLength(0)
+                  null
+                case _ =>
+                  input.readObject().asInstanceOf[V]
+              }
+            }
+          }
         }
-      }
-    }
-  }
-
-  def inSafe[A](in: FileLock)(fun: => A): A = {
-    try
-      fun
-    finally {
-      if (in != null) {
-        try
-          in.release()
-        catch {
-          case e: IOException =>
-            Log.d(TAG, "Exception unlocking file", e)
-        }
-      }
     }
   }
 }
