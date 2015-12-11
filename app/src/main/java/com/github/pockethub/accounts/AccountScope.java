@@ -93,7 +93,7 @@ public class AccountScope extends ScopeBase {
     }
 
     @Override
-    protected <T> Map<Key<?>, Object> getScopedObjectMap(final Key<T> key) {
+    public <T> Map<Key<?>, Object> getScopedObjectMap(final Key<T> key) {
         GitHubAccount account = currentAccount.get();
         if (account == null)
             throw new OutOfScopeException("Cannot access " + key
