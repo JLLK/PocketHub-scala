@@ -1,2 +1,5 @@
-*.js linguist-language=Scala
+# this must be first so later entries will override it
+* text=auto
+
 *.java linguist-language=Scala
+*.js linguist-language=Scala
