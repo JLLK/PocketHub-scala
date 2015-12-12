@@ -2,7 +2,7 @@ package com.github.pockethub.accounts
 
 import com.google.inject.{Key, Provider, Scope}
 
-import java.util
+import scala.collection.mutable
 
 /**
   * Created by chentao on 15/12/11.
@@ -49,9 +49,9 @@ abstract class ScopeBase extends Scope {
     () => {
       val scopedObjects = getScopedObjectMap(key)
       val current = scopedObjects.get(key).asInstanceOf[A]
-      if (current == null && !scopedObjects.containsKey(key)) {
+      if (current == null && scopedObjects(key) != null) {
         val newCurrent = unscoped.get()
-        scopedObjects.put(key, newCurrent.asInstanceOf[AnyRef])
+        scopedObjects += (key -> newCurrent.asInstanceOf[AnyRef])
         newCurrent
       } else {
         current
@@ -65,6 +65,6 @@ abstract class ScopeBase extends Scope {
     * @param key
     * @return map
     */
-  def getScopedObjectMap[A](key: Key[A]): util.Map[Key[_], AnyRef]
+  def getScopedObjectMap[A](key: Key[A]): mutable.Map[Key[_], AnyRef]
 }
 
